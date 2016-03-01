@@ -6,4 +6,4 @@
 
 Move the `vimruntime` directory from wherever you cloned it to `~/.vimruntime`
 
-Replace your `~/.vimrc` with the one in `~/.vimruntime`
+`cat ~/.vimruntime/.vimrc > ~/.vimrc`
