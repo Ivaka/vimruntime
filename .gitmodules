@@ -22,3 +22,6 @@
 [submodule "plugins/vim-buffergator"]
 	path = plugins/vim-buffergator
 	url = https://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "plugins/vim-gitgutter"]
+	path = plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
