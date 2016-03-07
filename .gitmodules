@@ -1,6 +1,3 @@
-[submodule "plugins/bufexplorer"]
-	path = plugins/bufexplorer
-	url = https://github.com/jlanzarotta/bufexplorer.git
 [submodule "plugins/nerdtree"]
 	path = plugins/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
@@ -19,3 +16,12 @@
 [submodule "plugins/nerdcommenter"]
 	path = plugins/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
+[submodule "plugins/vim-indexed-search"]
+	path = plugins/vim-indexed-search
+	url = https://github.com/henrik/vim-indexed-search
+[submodule "plugins/vim-buffergator"]
+	path = plugins/vim-buffergator
+	url = https://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "plugins/vim-gitgutter"]
+	path = plugins/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
