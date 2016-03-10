@@ -94,6 +94,9 @@ set background=dark
 " Set Search group highlight color
 hi Search ctermbg=220 ctermfg=053
 
+" Set Matching Parenthesis group highlight color
+hi MatchParen cterm=bold ctermbg=none ctermfg=220
+
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
