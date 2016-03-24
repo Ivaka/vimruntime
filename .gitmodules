@@ -28,3 +28,6 @@
 [submodule "plugins/ctrlp"]
 	path = plugins/ctrlp
 	url = https://github.com/kien/ctrlp.vim
+[submodule "plugins/vim-autoformat"]
+	path = plugins/vim-autoformat
+	url = https://github.com/Chiel92/vim-autoformat.git
