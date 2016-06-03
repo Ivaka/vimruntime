@@ -60,7 +60,7 @@ set showmatch
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
-"Ctrl+d delete word under cursor
+" Ctrl+d delete word under cursor
 imap <C-d> <C-[>diwi
 
 " No annoying sound on errors
@@ -153,6 +153,8 @@ au TabLeave * let g:lasttab = tabpagenr()
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
 map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+map <leader>ee :e <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -265,3 +267,5 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 
 " F3 to autoformat file
 noremap <F3> :Autoformat<CR>
+
+inoremap ii <Esc>
