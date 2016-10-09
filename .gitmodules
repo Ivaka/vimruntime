@@ -1,6 +1,3 @@
-[submodule "plugins/nerdtree"]
-	path = plugins/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
 [submodule "plugins/syntastic"]
 	path = plugins/syntastic
 	url = https://github.com/scrooloose/syntastic.git
@@ -25,9 +22,9 @@
 [submodule "plugins/vim-gitgutter"]
 	path = plugins/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "plugins/ctrlp"]
-	path = plugins/ctrlp
-	url = https://github.com/kien/ctrlp.vim
 [submodule "plugins/vim-autoformat"]
 	path = plugins/vim-autoformat
 	url = https://github.com/Chiel92/vim-autoformat.git
+[submodule "plugins/vim-scala"]
+	path = plugins/vim-scala
+	url = https://github.com/derekwyatt/vim-scala
