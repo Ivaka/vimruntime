@@ -112,6 +112,10 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
 map <leader>ee :e <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
@@ -204,7 +208,6 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-
 
 command Nuke bufdo bd
 
