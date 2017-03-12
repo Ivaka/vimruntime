@@ -13,7 +13,7 @@ set autoread
 
 " Set listchars to indicate trailing whitespace & tabs
 set listchars=tab:▸·,trail:·,eol:¬,precedes:←,extends:→
-set tabstop=8 softtabstop=4 noexpandtab shiftwidth=4 smarttab
+set tabstop=4 softtabstop=4 noexpandtab shiftwidth=4 smarttab
 
 " Display line numbers
 set nu
