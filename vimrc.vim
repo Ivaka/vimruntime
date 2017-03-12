@@ -12,7 +12,8 @@ filetype indent on
 set autoread
 
 " Set listchars to indicate trailing whitespace & tabs
-set listchars=tab:»·,trail:·
+set listchars=tab:▸·,trail:·,eol:¬,precedes:←,extends:→
+set tabstop=4 softtabstop=4 noexpandtab shiftwidth=4 smarttab
 
 " Display line numbers
 set nu
@@ -58,6 +59,7 @@ set magic
 
 " Show matching brackets when text indicator is over them
 set showmatch
+
 " How many tenths of a second to blink when matching brackets
 set mat=2
 
@@ -99,10 +101,6 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
 
 " Linebreak on 500 characters
 set lbr
@@ -195,9 +193,6 @@ nmap <leader>h :bprevious<CR>
 " Close the current buffer and move to the previous one
 " This replicates the idea of closing a tab
 nmap <leader>bq :bp <BAR> bd #<CR>
-
-" F3 to autoformat file
-noremap <F3> :Autoformat<CR>
 
 inoremap qq <Esc>
 command Nuke bufdo bd
