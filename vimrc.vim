@@ -64,7 +64,7 @@ set showmatch
 set mat=2
 
 " Ctrl+d delete word under cursor
-imap <C-d> <C-[>diwi
+imap <C-d> <Esc>caw
 
 " No annoying sound on errors
 set noerrorbells
@@ -207,3 +207,5 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 command Nuke bufdo bd
 
 command TrailBeGone %s/\s\+$//e
+
+set backspace=indent,eol,start

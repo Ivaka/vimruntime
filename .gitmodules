@@ -27,4 +27,4 @@
 	url = https://github.com/Chiel92/vim-autoformat.git
 [submodule "plugins/vim-scala"]
 	path = plugins/vim-scala
-	url = https://github.com/derekwyatt/vim-scala
+	url = https://github.com/derekwyatt/vim-scala.git
