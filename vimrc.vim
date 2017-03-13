@@ -153,12 +153,6 @@ endtry
 call pathogen#infect('~/.vimruntime/plugins/{}')
 call pathogen#helptags()
 
-" Python
-let g:syntastic_python_checkers=['pyflakes']
-
-" Javascript
-let g:syntastic_javascript_checkers = ['jshint']
-
 function! HasPaste()
     if &paste
         return 'PASTE MODE  '
