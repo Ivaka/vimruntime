@@ -180,7 +180,6 @@ set background=dark
 "" Set Search group highlight color
 hi Search ctermbg=220 ctermfg=053
 
-
 " PLUGIN SETTINGS
 
 "" Load plugins

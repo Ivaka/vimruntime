@@ -28,3 +28,6 @@
 [submodule "plugins/ale"]
 	path = plugins/ale
 	url = https://github.com/w0rp/ale.git
+[submodule "autoload"]
+	path = autoload
+	url = https://github.com/tpope/vim-pathogen.git
