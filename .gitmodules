@@ -34,3 +34,6 @@
 [submodule "plugins/tagbar"]
 	path = plugins/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "plugins/impsort.vim"]
+	path = plugins/impsort.vim
+	url = https://github.com/tweekmonster/impsort.vim.git
