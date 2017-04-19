@@ -1,0 +1,476 @@
+*impsort.txt* *impsort*
+		     _                                _                      ~
+		    (_)_ __ ___  _ __  ___  ___  _ __| |_                    ~
+		    | | '_ ` _ \| '_ \/ __|/ _ \| '__| __|                   ~
+		    | | | | | | | |_) \__ \ (_) | |  | |_                    ~
+		    |_|_| |_| |_| .__/|___/\___/|_|   \__|                   ~
+		                |_|                                          ~
+
+==============================================================================
+INTRO                                                           *impsort-intro*
+
+|impsort| will sensibly sort your Python import lines, as well as highlight
+imported objects.  "Sensibly" means that it will sort groups of imports
+without moving them out of their original place in the file.
+
+A similar utility named `isort` does the same thing, but is a little
+destructive in doing so.  It tries to hoist almost all imports up to the top
+of the file.  This is bad if you're modifying `sys.path` or need to do some
+other import sorcery.
+
+Highlighting doesn't have anything to do with the sorting.  It's simply nicety
+that was easily achievable the existing code.  It's useful as a way to quickly
+see if variables you're using is actually an import being shadowed.  This
+includes names from a star import (see: |g:impsort_highlight_star_imports|).
+
+
+==============================================================================
+CONTENTS                                                     *impsort-contents*
+
+  Commands              |impsort-command|
+  Config                |impsort-config|
+  Highlighting          |impsort-highlight|
+  Sorting               |impsort-sorting|
+  Notable behavior      |impsort-notes|
+    Formatting          |impsort-formatting|
+  License               |impsort-license|
+
+==============================================================================
+COMMAND                                                       *impsort-command*
+
+							*:ImpSort* *:ImpSort!*
+:{range}ImpSort[!]	Run ImpSort on your Python script.  It accepts an
+			optional {range} of lines to sort specifically, but
+			any non-import lines in the range will be discarded.
+
+			If [!] is present, "from ... import" lines will be
+			grouped by the first module name and separated with
+			spaces.
+
+			Map it to your favorite key or run it in the command
+			line yourself.  Endless possibilities!
+
+						*:ImpSortAuto* *:ImpSortAuto!*
+:ImpSortAuto[!]		Enables automatic sorting in the current buffer.
+			Import sorting is performed after |InsertLeave| if the
+			cursor is within an import region.  [!] has the same
+			effect as in |:ImpSort!|.  After leaving insert mode
+			and sorting, an attempt is made to put your cursor
+			back on the word you left on.
+
+			If called while automatic sorting is active, it will
+			disable it instead.
+
+			This is a fairly broad thing to enable, which is why
+			it's per-buffer only.  A utility function
+			*impsort#is_sorted()* is available to help you decide
+			how and when to enable automatic sorting.
+
+			An example script you would create in
+			`after/ftplugin/python.vim`:
+>
+			if impsort#is_sorted()
+			  ImpSortAuto!
+			endif
+<
+			This script will check to see if the current python
+			file's imports are already sorted before enabling
+			automatic sort.  It's simple, but the ramifications of
+			enabling this may not be clear to some users who just
+			blindly enable options.  If this is something you want
+			to enable on all python files, you will have to
+			deliberately enable it yourself.
+
+
+==============================================================================
+CONFIG                                                         *impsort-config*
+
+Though these use the |g:| prefix, the |b:| variants will be preferred if
+they're present to allow you to have custom settings on a per-buffer basis.
+
+						     *g:impsort_relative_last*
+g:impsort_relative_last		If enabled, relative imports will be moved to
+				the bottom of the import section.
+
+				Default: `0`
+
+						 *g:impsort_line_continuation*
+g:impsort_line_continuation     If enabled, uses line continuations instead of
+				parenthesis for wrapping import lines.
+				See: |impsort-formatting|
+
+				Default: `0`
+
+						 *g:impsort_default_textwidth*
+g:impsort_textwidth		The number of characters before wrapping an
+				import line.
+				See: |impsort-formatting|
+
+				Default: |'textwidth'| or `79`
+
+				Note: If set to an empty value, |'textwidth'|
+				will be used.  If |'textwidth'| is also an
+				empty value, `79` will be used.
+
+						    *g:impsort_start_nextline*
+g:impsort_start_nextline	If enabled, starts imported module names will
+				start on the next line on "from...import"
+				See: |impsort-formatting|
+
+				Default: `0`
+
+					       *g:impsort_override_formatexpr*
+g:impsort_override_formatexpr	If enabled, overrides the formatexpr while
+				typing on an import line.  Since |impsort|
+				takes care of formatting, letting the default
+				|'formatexpr'| wrap an import line as you're
+				typing can be annoying.
+
+				Default: `0`
+
+				Note: This only applies while you're typing in
+				insert mode.  Manual formatting with |gq| will
+				work like it usually would.
+
+				Note: This is a convenient option when using
+				|:ImpSortAuto|.
+
+						*g:impsort_highlight_imported*
+g:impsort_highlight_imported	If enabled, highlights all imported objects in
+				the buffer on |BufWinEnter| and |TextChanged|.
+
+				Default: `1`
+
+				Note: If asynchronous calls are not available,
+				a simple highlighting method will be used
+				based on imported names.
+
+				The highlight group used for imported objects
+				is |pythonImportedObject|.  By default, it is
+				linked to the `Keyword` highlight group.
+
+				If asynchronous calls are available, a more
+				accurate parser is used to highlight imported
+				functions, classes, and modules.
+				See: |impsort-highlight|
+
+					    *g:impsort_highlight_star_imports*
+g:impsort_highlight_star_imports
+				If enabled, `*` imports will be parsed in an
+				external script to highlight objects from the
+				module.
+
+				Default: `0`
+
+				Note: This option is ignored if asynchronous
+				calls are available.
+
+						  *g:impsort_allow_slow_parse*
+g:impsort_allow_slow_parse	If enabled, a more accurate, but slower import
+				parser is used.
+
+				Default: `0`
+
+				Note: This option is ignored if asynchronous
+				calls are available.
+
+				Note: This option is for testing purposes.
+				You should not enable this option manually.
+				If asynchronous calls are not available, there
+				will be a significant delay while editing.
+
+g:impsort_lines_after_imports	The number of blank lines that should follow a
+				set of imports.  Imports preceeding module
+				functions and classes will always be followed
+				by two blank lines.
+
+				Default: `1` (minimum)
+
+
+Sort customization ~
+
+There are a few variables that allow you to change the sort order of the
+imports.  Each can take more than one sort method.  Each method is used in
+order.  If one results in an equality, the next is tried.
+
+See also: |impsort-methods|, |sort()|
+
+
+						      *g:impsort_method_group*
+g:impsort_method_group		A list of sort methods for a `group`.
+
+				Default: >
+				['length', 'alpha']
+<
+				A group is defined by the first component in
+				the import (the root module).  For example:
+>
+				import os.path
+				from os import path
+<
+				In both of the cases above, `os` is the
+				`group`.  Leading dots (relative imports) are
+				included in the group's name.
+
+				Note: Since a `group` requires more than one
+				import line from the same root module to be
+				effectively sorted, groups that only contain
+				one import line (let's call them `orphans`)
+				are grouped together and placed above all of
+				the other groups.  This is make it easier to
+				see them when there are many imports involved.
+				Additionally, if |:Impsort!| is used to add
+				blank lines between the imports groups, the
+				`orphans` would add a lot of unnecessary
+				whitespace.  For example:
+>
+				from moduleA import thangs
+				from moduleB import things
+				from moduleA.thangs import things
+<
+				Would sort to:
+>
+				from moduleB import things
+				from moduleA import thangs
+				from moduleA.thangs import things
+<
+
+						     *g:impsort_method_module*
+g:impsort_method_module		A list of sort methods for `modules` within a
+				group.
+
+				Default: >
+				['depth', 'length', 'alpha']
+<
+				A module is the entire module path immediately
+				after "import" or "from".  For example:
+>
+				import os.path
+				from os import path
+<
+				The modules are "os.path" and "os",
+				respectively.
+
+
+						    *g:impsort_method_imports*
+g:impsort_method_imports	A list of sort methods for imported objects.
+
+				Default: >
+				['alpha', 'length']
+<
+				This only affects "from ... import" lines.
+				This option sorts the text after "import".
+				For Example:
+>
+				from os import path
+<
+				In the example above "path" is the imported
+				object.
+
+
+Sort methods ~
+							     *impsort-methods*
+
+The following methods are available to use with the variables mentioned above.
+
+alpha	  - Alphabetic sort.
+depth	  - Module depth.  Basically how many dots are in the module path.
+length	  - The length of a string.
+|Funcref|   - A custom sort function.  See: |sort()|
+
+
+
+Convenience function~
+
+							  *impsort#sort_top()*
+impsort#sort_top({pattern}, {a}, {b})
+				This function takes a pattern and returns `1`
+				or `-1` to keep it at the top of the sort.  If
+				neither {a} or {b} matches or both matches the
+				pattern, it returns `0` to allow the next
+				method to determine the sort order.
+
+				To keep things sorted to the bottom, you
+				simply multiply the return value by `-1`.
+
+
+Custom sort function ~
+							 *impsort-custom-sort*
+
+If you have different needs for sorting, you can use a |Funcref| to change
+sorting criteria.  For example, if you wanted `django` to always be at the top
+of the import section:
+
+>
+	function! s:django_sort(a, b) abort
+	  return impsort#sort_top('^django', a:a, a:b)
+	endfunction
+
+	let g:impsort_method_group = [function('s:django_sort'), 'length',
+		\ 'alpha']
+	let g:impsort_method_module = [function('s:django_sort'), 'depth',
+		\ 'length', 'alpha']
+<
+
+Note: |django-plus| has an option to enable this:
+https://github.com/tweekmonster/django-plus.vim
+
+
+==============================================================================
+HIGHLIGHTING                                                *impsort-highlight*
+
+When |g:impsort_highlight_imported| is enabled, the following syntax groups
+are used to highlight imported object names:
+
+							*pythonImportedObject*
+|pythonImportedObject| is the default syntax group for imported object names.
+This group is linked to `Keyword`.  If asynchronous calls are available, this
+syntax group will be used for imported object names that aren't covered by the
+ones mentioned below.
+
+						       *pythonImportedFuncDef*
+|pythonImportedFuncDef| is used for imported functions.  This group is linked
+to `Function`.
+
+						      *pythonImportedClassDef*
+|pythonImportedClassDef| is used for imported classes.  This group is linked
+to `Class`.
+
+							*pythonImportedModule*
+|pythonImportedModule| is used for imported modules.  Unlike the previous two,
+this group is linked to |pythonImportedObject| since distinguishing this may
+not be that useful.
+
+
+==============================================================================
+SORTING                                                       *impsort-sorting*
+
+|impsort| sorts sections of imports and separates them by origin.  A section
+is a group of consecutive import lines.
+
+Within each section, imports are sorted by origin:
+
+1. Standard library
+2. Third party (in site-packages)
+3. local (basically imports not found in 1 and 2)
+
+Each of these origins are separated by a blank line as suggested in PEP8.
+
+Within each origin, the imports are sorted using the methods described in
+|impsort-config|.
+
+
+==============================================================================
+NOTES                                                           *impsort-notes*
+
+|impsort| doesn't care too much about syntax.  It searches for lines starting
+with `import` or `from` and any number of lines immediately after it that are
+blank or begin with indentation greater than the import line's.
+
+For example: >
+
+  from os import (
+  	\ %
+
+      ^path
+<
+|impsort| will consider all of the above to be an import line.  The only thing
+that matters is that the following lines are blank or indented past the
+initial import line.  Non-keyword characters are stripped from the text
+(including commas) to normalize the text before parsing.  As a result, you get
+a convenient side effect: You can add more objects to import anywhere within
+those lines.
+
+Example adding `mkdir` to the import:
+>
+  from os import (
+  	\ %
+
+      ^path mkdir
+<
+After running |:ImpSort|:
+>
+  from os import mkdir, path
+<
+The main convenience is that you don't have to worry about extra commas or
+parenthesis that you may have yanked from another file.  Simply adding them
+then sorting will be enough.  Additionally, with |:ImpSortAuto| enabled, the
+line will be cleaned up and sorted automatically upon |InsertLeave|.
+
+
+							  *impsort-formatting*
+Formatting~
+
+While limited, there are a few options that can help you maintain consistency
+in existing code.
+
+|g:impsort_line_continuation|
+
+By default, |impsort| uses the parenthetical style for wrapping import lines.
+This causes line continuation slashes to be used instead.
+
+Example: >
+
+  from module import LongImport1, LongImport2
+<
+After wrapping: >
+  from module import LongImport1, \
+      LongImport2
+<
+
+|g:impsort_textwidth|
+
+Import lines are wrapped if they exceed a certain length.  By default,
+|'textwidth'| is used.  You can use |g:impsort_textwidth| to set a textwidth
+just for imports.  If a name would cause the line to exceed the width, a new
+line is added.  If you want to have one import name per line, you can set this
+to a low value (e.g. `1`).
+
+Regardless of what this is set to, wrapped lines are always indented.
+
+|g:impsort_start_nextline|
+
+If this option is enabled, imports that would wrap start on the line
+immediately after the import line.  For example: >
+
+  from module import LongImport1
+<
+After wrapping: >
+
+  # This will also cause a blank line to be added
+  # after the closing parenthesis.
+  from module import (
+      LongImport1
+  )
+
+  # if g:impsort_line_continuation is enabled
+  from module import \
+      LongImport1
+<
+
+==============================================================================
+LICENSE                                                       *impsort-license*
+
+The MIT License
+Copyright (c) 2016 Tommy Allen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
