@@ -189,7 +189,11 @@ call pathogen#helptags()
 "" Vim airline settings
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tagbar#enabled = 1
 let g:airline_theme="luna"
+
+"" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
 "" Asynchronous Lint Engine
 let g:ale_echo_msg_error_str = 'E'

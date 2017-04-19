@@ -31,3 +31,6 @@
 [submodule "autoload"]
 	path = autoload
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "plugins/tagbar"]
+	path = plugins/tagbar
+	url = https://github.com/majutsushi/tagbar.git
