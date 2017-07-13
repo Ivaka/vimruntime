@@ -37,8 +37,8 @@ set ffs=unix,dos,mac
 
 "" Be able to undo across restarts
 try
-    set undodir=~/.vimruntime/temp/undo
-    set undofile
+	set undodir=~/.vimruntime/temp/undo
+	set undofile
 catch
 endtry
 
@@ -96,7 +96,7 @@ set gfn=Hack:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
 syntax enable
 
 try
-    colorscheme desert
+	colorscheme desert
 catch
 endtry
 
@@ -196,12 +196,17 @@ let g:airline_theme="luna"
 nmap <F8> :TagbarToggle<CR>
 
 "" Asynchronous Lint Engine
+let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
-"" Python import sort
-let g:vim_isort_python_version = 'python2'
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 1
+
+let g:python_autopep8_use_global = 1
+let g:ale_fixers = {'python': ['autopep8']}
+let g:ale_python_autopep8_options = '--aggressive --aggressive'
 
 " MISC
 
@@ -213,8 +218,8 @@ command AllDouble %s/'/"/g
 
 "" Used in the statusline to indicate when in paste mode
 function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
+	if &paste
+		return 'PASTE MODE  '
+	endif
+	return ''
 endfunction
