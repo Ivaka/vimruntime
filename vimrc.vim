@@ -204,9 +204,10 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
 
-let g:python_autopep8_use_global = 1
-let g:ale_fixers = {'python': ['autopep8']}
-let g:ale_python_autopep8_options = '--aggressive --aggressive'
+"let g:python_autopep8_use_global = 1
+let g:python_yapf_use_global = 1
+let g:ale_fixers = {'python': ['yapf']}
+"let g:ale_python_autopep8_options = '--aggressive --aggressive'
 
 " MISC
 
