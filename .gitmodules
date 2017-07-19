@@ -19,12 +19,6 @@
 [submodule "plugins/vim-gitgutter"]
 	path = plugins/vim-gitgutter
 	url = https://github.com/airblade/vim-gitgutter.git
-[submodule "plugins/vim-autoformat"]
-	path = plugins/vim-autoformat
-	url = https://github.com/Chiel92/vim-autoformat.git
-[submodule "plugins/vim-scala"]
-	path = plugins/vim-scala
-	url = https://github.com/derekwyatt/vim-scala.git
 [submodule "plugins/ale"]
 	path = plugins/ale
 	url = https://github.com/w0rp/ale.git
