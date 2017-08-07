@@ -211,7 +211,6 @@ let g:ale_fixers = {'python': ['yapf']}
 
 command Nuke bufdo bd
 command TrailBeGone %s/\s\+$//e
-command PDB !python -m pdb %
 command AllSingle %s/"/'/g
 command AllDouble %s/'/"/g
 
