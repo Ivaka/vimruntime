@@ -125,7 +125,8 @@ command W w !sudo tee % > /dev/null
 
 inoremap <leader>\ <C-x><C-p>
 
-imap <C-d> <Esc>caw " Ctrl+d delete word under cursor
+" Ctrl+d delete word under cursor
+imap <C-d> <Esc>caw 
 
 "" Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
@@ -204,6 +205,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
 
+let g:ale_python_flake8_options = '-m flake8 --max-line-length=120'
 let g:python_yapf_use_global = 1
 let g:ale_fixers = {'python': ['yapf']}
 
