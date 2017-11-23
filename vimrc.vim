@@ -70,6 +70,9 @@ set wrap
 "" This is almost a must if you wish to use buffers in this way.
 set hidden
 
+nnoremap <silent> <Tab> :bn<CR>
+nnoremap <silent> <S-Tab> :bp<CR>
+
 set backspace=indent,eol,start
 
 " DISPLAY SETTINGS
@@ -123,10 +126,12 @@ nnoremap <silent> <C-X> :nohlsearch<CR><C-L>
 
 command W w !sudo tee % > /dev/null
 
-inoremap <leader>\ <C-x><C-p>
+inoremap <leader>\ <C-n>
+inoremap <expr> j ((pumvisible())?("\<C-n>"):("j"))
+inoremap <expr> k ((pumvisible())?("\<C-p>"):("k"))
 
 " Ctrl+d delete word under cursor
-imap <C-d> <Esc>caw 
+imap <C-d> <Esc>caw
 
 "" Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
@@ -181,7 +186,26 @@ set background=dark
 "" Set Search group highlight color
 hi Search ctermbg=220 ctermfg=053
 
-" PLUGIN SETTINGS
+" Generally useful stuff
+iabbrev lenght length
+inoremap <leader>q <esc>^i
+nnoremap <leader>q ^
+
+" Python stuff
+augroup filetype_python
+	autocmd BufNewFile,BufRead *.py :iabbrev slef self
+	autocmd BufNewFile,BufRead *.py vnoremap <leader>cb <esc>`<O'''<esc>`>o'''<esc>o
+	autocmd BufNewFile,BufRead *.py :iabbrev <buffer> debugger import pdb; pdb.set_trace()
+augroup END
+
+"
+" Typescript
+augroup filetype_ts
+	autocmd BufNewFile,BufRead *.ts set expandtab
+augroup END
+
+
+"" PLUGIN SETTINGS
 
 "" Load plugins
 call pathogen#infect('~/.vimruntime/plugins/{}')
