@@ -20,7 +20,6 @@ set lazyredraw
 set magic
 
 "" Show matching brackets when text indicator is over them
-
 set showmatch
 
 "" How many tenths of a second to blink when matching brackets
@@ -37,8 +36,8 @@ set ffs=unix,dos,mac
 
 "" Be able to undo across restarts
 try
-	set undodir=~/.vimruntime/temp/undo
-	set undofile
+  set undodir=~/.vimruntime/temp/undo
+  set undofile
 catch
 endtry
 
@@ -78,7 +77,7 @@ set backspace=indent,eol,start
 " DISPLAY SETTINGS
 
 set listchars=tab:▸·,trail:·,eol:¬,precedes:←,extends:→
-set tabstop=4 softtabstop=4 noexpandtab shiftwidth=4 smarttab
+set tabstop=2 softtabstop=2 expandtab shiftwidth=2 smarttab
 
 set nu
 set relativenumber
@@ -99,7 +98,7 @@ set gfn=Hack:h14,Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
 syntax enable
 
 try
-	colorscheme desert
+  colorscheme desert
 catch
 endtry
 
@@ -190,18 +189,22 @@ hi Search ctermbg=220 ctermfg=053
 iabbrev lenght length
 inoremap <leader>q <esc>^i
 nnoremap <leader>q ^
+vnoremap <C-h> :s/
+nnoremap <C-h> :%s/
+
 
 " Python stuff
 augroup filetype_python
-	autocmd BufNewFile,BufRead *.py :iabbrev slef self
-	autocmd BufNewFile,BufRead *.py vnoremap <leader>cb <esc>`<O'''<esc>`>o'''<esc>o
-	autocmd BufNewFile,BufRead *.py :iabbrev <buffer> debugger import pdb; pdb.set_trace()
+  autocmd BufNewFile,BufRead *.py :iabbrev slef self
+  autocmd BufNewFile,BufRead *.py vnoremap <leader>cb <esc>`<O'''<esc>`>o'''<esc>o
+  autocmd BufNewFile,BufRead *.py :iabbrev <buffer> debugger import pdb; pdb.set_trace()
 augroup END
 
 "
 " Typescript
 augroup filetype_ts
-	autocmd BufNewFile,BufRead *.ts set expandtab
+  autocmd BufNewFile,BufRead *.ts set expandtab
+  autocmd FileType typescript imap <buffer> <Leader>o <C-x><C-o>
 augroup END
 
 
@@ -210,6 +213,11 @@ augroup END
 "" Load plugins
 call pathogen#infect('~/.vimruntime/plugins/{}')
 call pathogen#helptags()
+
+"" tsuquyomi (typescript autocomplete using tsserver)
+let g:tsuquyomi_completion_detail = 1
+let g:tsuquyomi_import_curly_spacing = 0 
+
 
 "" Vim airline settings
 let g:airline#extensions#tabline#enabled = 1
@@ -233,6 +241,10 @@ let g:ale_python_flake8_options = '-m flake8 --max-line-length=120'
 let g:python_yapf_use_global = 1
 let g:ale_fixers = {'python': ['yapf']}
 
+"" NerdCommenter
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+
 " MISC
 
 command Nuke bufdo bd
@@ -242,8 +254,8 @@ command AllDouble %s/'/"/g
 
 "" Used in the statusline to indicate when in paste mode
 function! HasPaste()
-	if &paste
-		return 'PASTE MODE  '
-	endif
-	return ''
+  if &paste
+    return 'PASTE MODE  '
+  endif
+  return ''
 endfunction
