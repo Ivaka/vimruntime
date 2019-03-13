@@ -216,7 +216,7 @@ call pathogen#helptags()
 
 "" tsuquyomi (typescript autocomplete using tsserver)
 let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_import_curly_spacing = 0 
+let g:tsuquyomi_import_curly_spacing = 0
 
 
 "" Vim airline settings
