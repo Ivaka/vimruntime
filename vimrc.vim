@@ -25,9 +25,6 @@ set showmatch
 "" How many tenths of a second to blink when matching brackets
 set mat=2
 
-"" Add a bit extra margin to the left
-set foldcolumn=1
-
 "" Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
 
@@ -83,12 +80,9 @@ set nu
 set relativenumber
 set ruler
 
-"" Height of the command bar
-set cmdheight=2
-
 "" Always show the status line
 set laststatus=2
-"
+
 "" Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
 
@@ -139,7 +133,6 @@ map <leader>ee :e <c-r>=expand("%:p:h")<cr>/
 
 "" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <c-space> ?
 
 "" Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -159,12 +152,6 @@ inoremap $3 {}<esc>i
 inoremap $4 {<esc>o}<esc>O
 
 nnoremap <leader>gu :GitGutterToggle<CR>
-
-"" Move to the next buffer
-nmap <leader>l :bnext<CR>
-
-"" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
 
 "" Close the current buffer and move to the previous one
 nmap <leader>bq :bp <BAR> bd #<CR>
