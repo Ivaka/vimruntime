@@ -191,6 +191,8 @@ inoremap <leader>q <esc>^i
 nnoremap <leader>q ^
 vnoremap <C-h> :s/
 nnoremap <C-h> :%s/
+noremap <leader>y "+y
+noremap <leader>Y "*y
 
 
 " Python stuff
