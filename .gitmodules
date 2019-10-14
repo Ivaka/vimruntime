@@ -34,3 +34,6 @@
 [submodule "plugins/tsuquyomi"]
 	path = pack/default/start/tsuquyomi
 	url = https://github.com/Quramy/tsuquyomi.git
+[submodule "pack/default/start/nnn"]
+	path = pack/default/start/nnn
+	url = git@github.com:mcchrish/nnn.vim.git
