@@ -50,8 +50,8 @@ set textwidth=500
 set autoindent
 set smartindent
 
-nnoremap <Silent> <Tab> :bn<CR>
-nnoremap <Silent> <S-Tab> :bp<CR>
+nnoremap <silent> <Tab> :bn<CR>
+nnoremap <silent> <S-Tab> :bp<CR>
 
 set backspace=indent,eol,start
 
@@ -102,7 +102,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-nnoremap <Silent> <C-X> :nohlsearch<CR><C-L>
+nnoremap <silent> <C-X> :nohlsearch<CR><C-L>
 
 nnoremap <Leader>pp :setlocal paste!<CR>
 nnoremap <Leader>ee :e <C-R>=expand("%:p:h")<CR>/
