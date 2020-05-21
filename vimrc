@@ -26,7 +26,7 @@ set ffs=unix,dos,mac
 
 " undo across restarts
 try
-  set undodir=~/.vimruntime/temp/undo
+  set undodir=~/.vim/temp/undo
   set undofile
 catch
 endtry
@@ -75,6 +75,9 @@ highlight MatchParen cterm=bold ctermbg=none ctermfg=220
 
 set colorcolumn=130
 highlight ColorColumn ctermbg=89
+
+hi clear CursorLine
+hi CursorLineNR cterm=bold
 
 inoremap qq <Esc>
 
