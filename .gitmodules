@@ -4,9 +4,6 @@
 [submodule "plugins/vim-airline-themes"]
 	path = pack/default/start/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
-[submodule "plugins/vim-fugitive"]
-	path = pack/default/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule "plugins/nerdcommenter"]
 	path = pack/default/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
