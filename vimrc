@@ -126,11 +126,6 @@ highlight Search ctermbg=220 ctermfg=053
 " exit insert mode with 'qq'
 inoremap qq <Esc>
 
-" handle autocomplete menu and navigation inside
-inoremap <Leader>\ <C-N>
-inoremap <expr> j ((pumvisible())?("\<C-N>"):("j"))
-inoremap <expr> k ((pumvisible())?("\<C-P>"):("k"))
-
 " go to beginning of line with <leader>q
 inoremap <Leader>q <esc>^i
 nnoremap <Leader>q ^
@@ -178,12 +173,6 @@ vnoremap $3 <Esc>`>a}<Esc>`<i{<Esc>
 vnoremap $$ <Esc>`>a"<Esc>`<i"<Esc>
 vnoremap $q <Esc>`>a'<Esc>`<i'<Esc>
 
-" map auto complete of (, ", ', [
-inoremap $1 ()<Esc>i
-inoremap $2 []<Esc>i
-inoremap $3 {}<Esc>i
-inoremap $4 {<Esc>o}<Esc>O
-
 " copy to clipboard
 noremap <leader>y "+y
 noremap <leader>Y "*y
@@ -199,3 +188,9 @@ command W w !sudo tee % > /dev/null
 set scrolloff=4
 
 " source ~/.vim/vim-airline
+
+
+" GUI stuff
+if has('gui_running')
+  set guifont=Liberation\ Mono\ 16
+endif
